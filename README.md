@@ -1,7 +1,7 @@
 # CIPHER — Certified Insider-threat detection via Privacy-preserving Hierarchical fEderated behavioral leaRning
 
 > **IEEE Transactions on Information Forensics and Security (TIFS) — Submission-Ready Repository**  
-> **Status:** Writing phase. All experiments complete. No further code runs required.
+> **Status:** Writing phase. All experiments complete. 
 
 ---
 
