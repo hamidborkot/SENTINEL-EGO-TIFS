@@ -1,0 +1,6 @@
+Section,Table,Experiment,Config,F1,AUC,Recall,Precision,FPR,FNR,MIA_AUC,Epsilon,Delta,Dataset,Attack,Aggregation
+IV-B,V,E1,CIPHER (FL+DP),0.7317,0.9127,0.6281,0.8763,0.0054,0.3719,N/A,1.2830,1e-5,CERT r5.2,None,FedAvg
+IV-D,VI,E8,CIPHER (FL+DP) - MIA Audit,0.7317,0.9127,0.6281,0.8763,0.0054,0.3719,0.5354,1.2830,1e-5,CERT r5.2,MIA,FedAvg
+IV-E,VII,E9,CIPHER (clean),0.7181,0.9103,0.5980,N/A,0.0041,N/A,N/A,1.2830,1e-5,CERT r5.2,None,FedAvg
+IV-E,VII,E9,FedAvg + Byzantine (3/10),0.7063,0.9124,0.5945,N/A,0.0054,N/A,N/A,1.2830,1e-5,CERT r5.2,Grad×5+LabelFlip,FedAvg
+IV-E,VII,E9,Multi-Krum + Byzantine (3/10),0.7022,0.8936,0.6135,N/A,0.0081,N/A,N/A,1.2830,1e-5,CERT r5.2,Grad×5+LabelFlip,Multi-Krum

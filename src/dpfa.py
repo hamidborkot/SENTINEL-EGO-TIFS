@@ -3,17 +3,29 @@
 Paper module: Section III-D (CIPHER, IEEE TIFS submission)
 
 Function:
-  Implements privacy-preserving federated aggregation across K=4 silos.
+  Implements privacy-preserving federated aggregation across K=10 user-stratified clients.
   Each round: local training → gradient clipping → Gaussian noise → Multi-Krum aggregation.
-  Provides (epsilon=1.28, delta=1e-5)-DP guarantee via Rényi DP composition.
+  Provides (epsilon=1.2830, delta=1e-5)-DP guarantee via Rényi DP composition.
   Includes Byzantine robustness via Multi-Krum filtering.
 
-Key parameters (from config/cipher_config.yaml):
-  sigma   = 1.28    (noise scale — corresponds to epsilon=1.28 operating point)
+=============================================================================
+PAPER-AUTHORITATIVE PRIVACY ACCOUNTING PARAMETERS
+(Use these values in all paper text, tables, and proofs — not federated.py)
+=============================================================================
+  sigma   = 1.28    (noise scale — canonical operating point)
   C       = 1.0     (gradient clipping norm)
   R       = 10      (federation rounds)
-  K       = 4       (number of silos: HR, IT, Finance, Operations)
+  K       = 10      (user-stratified FL clients — matches federated.py N_CLIENTS)
   q       = 0.10    (Poisson subsampling rate)
+  alpha   = 10      (Rényi order)
+  delta   = 1e-5    (DP failure probability)
+
+NOTE on federated.py constants:
+  federated.py uses Q_SAMPLE=0.01 and NOISE_SCALE=2.0 as training-loop
+  batch-sizing and noise-injection constants. Those are implementation
+  details and do NOT affect the privacy accounting below. The canonical
+  epsilon is computed here using q=0.10, sigma=1.28 as per Theorem 1.
+=============================================================================
 
 Privacy accounting (Theorem 1 in paper):
   Per-round RDP: epsilon_alpha = q^2 * alpha / (2 * sigma^2)
@@ -48,7 +60,7 @@ def multi_krum(gradients: List[np.ndarray], f: int = 1) -> np.ndarray:
     """Multi-Krum Byzantine-robust aggregation.
 
     Args:
-        gradients: List of K gradient vectors from K silos.
+        gradients: List of K gradient vectors from K clients.
         f: Number of expected Byzantine clients.
 
     Returns:
@@ -76,20 +88,21 @@ def compute_epsilon(sigma: float, R: int, q: float,
                    alpha: float = 10.0, delta: float = 1e-5) -> float:
     """Compute (epsilon, delta)-DP via Rényi DP composition.
 
-    This is the implementation of Theorem 1 from the paper.
+    This is the PAPER-AUTHORITATIVE implementation of Theorem 1.
+    Always call with the canonical paper values: sigma=1.28, R=10, q=0.10.
 
     Args:
-        sigma: Noise scale.
-        R: Number of federation rounds.
-        q: Poisson subsampling rate.
-        alpha: Rényi order.
-        delta: Target delta.
+        sigma: Noise scale (paper canonical: 1.28).
+        R: Number of federation rounds (paper canonical: 10).
+        q: Poisson subsampling rate (paper canonical: 0.10).
+        alpha: Rényi order (paper canonical: 10.0).
+        delta: Target delta (paper canonical: 1e-5).
 
     Returns:
         epsilon: Privacy budget.
 
-    Example (operating point):
-        compute_epsilon(1.28, 10, 0.10) → 1.2830
+    Example (canonical paper operating point):
+        compute_epsilon(sigma=1.28, R=10, q=0.10) → 1.2830
     """
     epsilon_alpha = (q ** 2 * alpha) / (2 * sigma ** 2)
     epsilon_total = R * epsilon_alpha
@@ -101,9 +114,9 @@ class DPFederatedAggregator:
     """DPFA: differentially private federated aggregation with Multi-Krum.
 
     Args:
-        sigma (float): Noise scale for DP-SGD.
-        C (float): Gradient clipping norm.
-        R (int): Number of federation rounds.
+        sigma (float): Noise scale for DP-SGD (paper canonical: 1.28).
+        C (float): Gradient clipping norm (paper canonical: 1.0).
+        R (int): Number of federation rounds (paper canonical: 10).
         f (int): Number of Byzantine clients to tolerate.
     """
 

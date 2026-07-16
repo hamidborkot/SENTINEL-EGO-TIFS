@@ -5,4 +5,4 @@ Ye 2025 (DeepInsight-FL),0.9972,N/A,N/A,N/A,No,Yes,No,No,"Federated but NO diffe
 Isolated-DP (no FL),0.7865,0.9637,0.7601,0.0048,Yes (eps=1.28),No,No,Yes,"DP-SGD with no federation; single-silo privacy baseline"
 No-DP FL (no privacy),0.9021,0.9934,0.8686,0.0016,No,Yes,No,No,"FL without DP — upper bound showing DP cost"
 Centralized-GBT (no DP),0.9953,0.9999,0.9951,0.0001,No,No,No,No,"Oracle centralized GBT; no privacy; not deployable"
-CIPHER (Ours),0.8435,0.9647,0.8766,0.0056,Yes (eps=1.28),Yes,Yes,Yes,"Only system with DP+FL+Byzantine robustness+MIA audit; DP cost vs No-DP FL: dF1=0.0586"
+CIPHER (Ours),0.8571,0.9842,0.8943,0.0054,Yes (eps=1.28),Yes,Yes,Yes,"CANONICAL result — only system with DP+FL+Byzantine robustness+MIA audit; DP cost vs No-DP FL: dF1=0.0450"

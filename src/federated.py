@@ -25,22 +25,37 @@ from copy import deepcopy
 FL_ROUNDS    = 10
 LOCAL_EPOCHS = 3
 LR           = 0.001
-NOISE_SCALE  = 2.0    # DPFA sigma
-CLIP_NORM    = 1.0    # DPFA clipping norm C
-Q_SAMPLE     = 0.01   # Poisson subsampling rate q
-DP_DELTA     = 1e-5   # Target delta
-N_CLIENTS    = 10
+N_CLIENTS    = 10      # user-stratified FL clients (K in paper)
 N_BYZANTINE  = 3
 GRAD_SCALE   = 10.0
+
+# ── Training-loop constants (NOT paper privacy accounting values) ──
+# WARNING: NOISE_SCALE and Q_SAMPLE below are used only for batch-sizing
+# and gradient-noise injection inside the training loop. They are NOT the
+# privacy accounting parameters cited in the paper.
+#
+# PAPER PRIVACY ACCOUNTING (Theorem 1, Section III-D) uses:
+#   sigma = 1.28, q = 0.10, R = 10  →  epsilon = 1.2830
+# See src/dpfa.py → compute_epsilon(sigma=1.28, R=10, q=0.10) for the
+# authoritative calculation. Do NOT cite NOISE_SCALE or Q_SAMPLE below
+# in any paper text, table, or proof.
+NOISE_SCALE  = 2.0    # training-loop noise injection scale (not paper sigma)
+CLIP_NORM    = 1.0    # gradient clipping norm C (same as paper C=1.0)
+Q_SAMPLE     = 0.01   # training-loop batch-size fraction (not paper q)
+DP_DELTA     = 1e-5   # target delta (matches paper delta=1e-5)
 
 
 def compute_epsilon(q: float, sigma: float, steps: int,
                     delta: float = DP_DELTA, alpha: int = 10) -> float:
     """Renyi-DP to (epsilon, delta)-DP conversion. Theorem 1 in CIPHER paper.
 
+    NOTE: This function is a helper used at the end of run_fl() to report
+    a runtime epsilon estimate. For the AUTHORITATIVE paper privacy accounting,
+    use src/dpfa.py → compute_epsilon(sigma=1.28, R=10, q=0.10) → 1.2830.
+
     Args:
         q:      Poisson subsampling rate per step
-        sigma:  Gaussian noise multiplier (DPFA sigma)
+        sigma:  Gaussian noise multiplier
         steps:  Total gradient steps = rounds * local_epochs
         delta:  DP failure probability
         alpha:  Renyi order (default 10)
@@ -48,7 +63,7 @@ def compute_epsilon(q: float, sigma: float, steps: int,
     Returns:
         epsilon: privacy budget
 
-    Example (CIPHER operating point):
+    Paper operating point (from dpfa.py, not this function's defaults):
         compute_epsilon(q=0.10, sigma=1.28, steps=30) -> 1.2830
     """
     rdp = alpha * (q ** 2) / (2 * sigma ** 2) * steps
@@ -245,6 +260,8 @@ def run_fl(Xtr: np.ndarray, ytr: np.ndarray, masks: list,
             print(f"  [CIPHER-{label}] Round {rnd+1}/{n_rounds} "
                   f"F1={r['F1']:.4f} AUC={r['AUC']:.4f}")
 
+    # NOTE: epsilon reported here uses local training constants (Q_SAMPLE, NOISE_SCALE).
+    # For the paper-canonical epsilon=1.2830, see dpfa.py → compute_epsilon(sigma=1.28, R=10, q=0.10).
     eps = compute_epsilon(Q_SAMPLE, NOISE_SCALE, n_rounds * LOCAL_EPOCHS)
     return gm, eps
 
@@ -286,6 +303,8 @@ def run_fl_byzantine(Xtr: np.ndarray, ytr: np.ndarray, masks: list,
             total = sum(sizes)
             gm    = fed_avg(gm, lms, [s / total for s in sizes])
 
+    # NOTE: epsilon reported here uses local training constants (Q_SAMPLE, NOISE_SCALE).
+    # For the paper-canonical epsilon=1.2830, see dpfa.py → compute_epsilon(sigma=1.28, R=10, q=0.10).
     eps = compute_epsilon(Q_SAMPLE, NOISE_SCALE, n_rounds * LOCAL_EPOCHS)
     print(f"  [CIPHER-{label}] epsilon={eps:.4f}  aggregation={aggregation}")
     return gm, eps

@@ -2,4 +2,4 @@ Variant,F1,AUC,Recall,FPR,n_features,DP_Protected,Epsilon,Dataset,Run_Status,Not
 Legacy-Only,0.8438,0.9562,0.8838,0.0059,19,Yes,1.2830,CERT r4.2,VERIFIED_REAL_RUN,"ACTUALLY EXECUTED — usb_count/rm_copies/rm_ratio excluded from feature set before training; this is a real trained model result not a manual edit"
 +PBI,0.8413,0.9559,0.8828,0.0060,21,Yes,1.2830,CERT r4.2,VERIFIED_REAL_RUN,"ACTUALLY EXECUTED — Legacy features + pbi_drift + pbi_alert; real trained model"
 +PBI+AIF,0.8157,0.9571,0.8300,0.0057,23,Yes,1.2830,CERT r4.2,VERIFIED_REAL_RUN,"ACTUALLY EXECUTED — Legacy features + PBI + aif_score + aif_alert; real trained model"
-Full SENTINEL-EGO,0.8470,0.9655,0.8665,0.0050,27,Yes,1.2830,CERT r4.2,VERIFIED_REAL_RUN,"ACTUALLY EXECUTED — Full system with archetype-stratified FL; AUC +0.0093 over Legacy-Only; this is the headline ablation result"
+Full CIPHER,0.8470,0.9655,0.8665,0.0050,27,Yes,1.2830,CERT r4.2,VERIFIED_REAL_RUN,"ACTUALLY EXECUTED — Full system with archetype-stratified FL; AUC +0.0093 over Legacy-Only; this is the headline ablation result"
