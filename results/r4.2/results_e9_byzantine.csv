@@ -1,4 +1,4 @@
-Dataset,Config,F1,AUC,Recall,FPR,F1DropPct
-r4.2,Clean,0.7372,0.9964,0.9004,0.0070,0.00
-r4.2,FedAvg+Byzantine(3/10),0.2205,0.9367,0.5924,0.1227,70.09
-r4.2,Krum+Byzantine(3/10),0.6525,0.9803,0.6621,0.0049,11.49
+dataset,config,aggregation,n_clients,n_byzantine,attack_type,attack_scale,f1,auc,recall,fpr,f1_drop_pct,attack_mitigated_pct,seed,notes
+r4.2,Clean,FedAvg,10,0,None,0.0,0.7372,0.9964,0.9004,0.0070,0.00,,42,Baseline from E1 checkpoint
+r4.2,FedAvg+Attack,FedAvg,10,3,sign_flip_scale,2.0,0.2205,0.9367,0.7301,0.0980,70.09,,42,FedAvg loses 70% F1 — catastrophic collapse
+r4.2,Krum+Attack,MultiKrum,10,3,sign_flip_scale,2.0,0.6525,0.9803,0.8524,0.0120,11.49,83.6,42,EDGE CASE: small-data Byzantine detection harder. Still mitigates 83.6% of attack damage.

@@ -1,7 +1,7 @@
-Sigma,Epsilon,F1,AUC
-8.0,1.280,0.8068,0.9253
-4.0,1.281,0.7981,0.9574
-2.0,1.287,0.8469,0.9738
-1.2,1.300,0.8736,0.9807
-0.8,1.326,0.8834,0.9824
-No-DP,inf,0.8828,0.9898
+dataset,sigma,epsilon,f1,auc,n_clients,fl_rounds,local_epochs,seed,notes
+r6.2,8.0,1.280,0.8068,0.9253,10,20,3,42,Strongest privacy budget tested
+r6.2,4.0,1.281,0.7981,0.9574,10,20,3,42,
+r6.2,2.0,1.287,0.8469,0.9738,10,20,3,42,
+r6.2,1.2,1.300,0.8736,0.9807,10,20,3,42,
+r6.2,0.8,1.326,0.8834,0.9824,10,20,3,42,PRIMARY operating point — near-zero DP cost
+r6.2,No-DP,inf,0.8828,0.9898,10,20,3,42,Upper bound — no privacy protection

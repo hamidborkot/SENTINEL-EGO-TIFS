@@ -1,4 +1,4 @@
-Dataset,Config,F1,AUC,Recall,FPR,F1DropPct
-r6.2,Clean,0.8808,0.9855,0.8543,0.0024,0.00
-r6.2,FedAvg+Byzantine(3/10),0.2778,0.8909,0.5924,0.1227,68.46
-r6.2,Krum+Byzantine(3/10),0.8825,0.9832,0.8603,0.0024,0.00
+dataset,config,aggregation,n_clients,n_byzantine,attack_type,attack_scale,f1,auc,recall,fpr,f1_drop_pct,attack_mitigated_pct,seed,notes
+r6.2,Clean,FedAvg,10,0,None,0.0,0.8808,0.9855,0.8543,0.0024,0.00,,42,Baseline from E1 checkpoint
+r6.2,FedAvg+Attack,FedAvg,10,3,sign_flip_scale,2.0,0.2778,0.8909,0.5924,0.1227,68.46,,42,FedAvg collapses under 30% Byzantine poisoning
+r6.2,Krum+Attack,MultiKrum,10,3,sign_flip_scale,2.0,0.8825,0.9832,0.8603,0.0024,0.00,100.0,42,Multi-Krum maintains full performance — 0% drop

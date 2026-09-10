@@ -1,72 +1,96 @@
-# CIPHER Results Key
+# CIPHER-TIFS — Results Column Definitions
 
-> **System:** CIPHER 
-> **Modules:** BDM / PSE / DPFA  
-> **Primary claim:** MIA-validated DP
-
-This file is the single source of truth. Every table in the paper must trace back to a row in one of these CSVs.
+This file defines every column used across all result CSVs. Refer here when reading any file in `results/`.
 
 ---
 
-## Paper Table → CSV Mapping
+## Common Columns (all CSVs)
 
-| Paper Table | Content | CSV File | Key Numbers |
-|---|---|---|---|
-| **Table V** | Primary Detection | `results_e1.csv` | **F1=0.8531, AUC=0.9601, ε=1.2830** |
-| **Table VI** | Ablation (BDM+PSE) | `results_e2_ablation_FIXED.csv` ✅ | AUC: 0.9749→0.9842 (+0.0093) |
-| **Table VII** | SOTA Comparison | `results_e4_comparison_FINAL.csv` ✅ | CIPHER only system with DP+MIA |
-| **Table VIII** | Scenario Breakdown | `results_e7_scenario_breakdown.csv` | F1 per threat scenario |
-| **Table IX** | **MIA Audit** ← HEADLINE | `results_e8_mia.csv` ✅ | **No-DP=0.7834, CIPHER=0.5024** |
-| **Table X** | Byzantine Robustness | `results_e9_byzantine.csv` | F1 drop <5pp at 30% Byzantine |
+| Column | Type | Description |
+|---|---|---|
+| `dataset` | string | CERT version: `r4.2`, `r5.2`, or `r6.2` |
+| `seed` | int / `multi` | Random seed used. `multi` = aggregate over 10 seeds |
+| `notes` | string | Context, caveats, or special conditions |
 
 ---
 
-## Figure → CSV Mapping
+## E1 — Primary Detection
 
-| Paper Figure | Content | CSV File | PNG |
-|---|---|---|---|
-| **Fig. 1** | System architecture | Manual (draw.io/TikZ) | ⬜ TO DRAW |
-| **Fig. 2** | FL Convergence | `results_convergence.csv` | `figures/fig1_convergence.png` |
-| **Fig. 3** | ε-sweep tradeoff | `results_e3_privacy.csv` | `figures/fig2_epsilon_utility.png` |
-| **Fig. 4** | Ablation bar | `results_e2_ablation_FIXED.csv` | `figures/fig3_ablation.png` |
-| **Fig. 5** | SOTA comparison | `results_e4_comparison_FINAL.csv` | `figures/fig4_sota_comparison.png` |
-
----
-
-## Critical Numbers — Copy-Paste Into Paper
-
-```
-F1  (primary, CERT r4.2)        = 0.8531
-AUC (primary, CERT r4.2)        = 0.9601
-ε   (privacy budget)            = 1.2830
-δ                               = 1e-5
-MIA AUC — No-DP FL             = 0.7834  ← attacker succeeds
-MIA AUC — CIPHER                = 0.5024  ← near-random after DP
-Δ MIA AUC (privacy gain)        = 0.2810
-DP cost (ΔF1 vs No-DP FL)       = −0.0586
-Byzantine F1 drop at 30% poison = <5pp
-Ablation AUC gain (Full vs Base)= +0.0093
-```
+| Column | Description |
+|---|---|
+| `method` | Model configuration (e.g., `CIPHER-FL-DP`) |
+| `f1` | F1-score on held-out test set (time-split) |
+| `auc` | ROC-AUC |
+| `recall` | True Positive Rate (sensitivity) |
+| `fpr` | False Positive Rate (1 - specificity) |
+| `precision` | Precision |
+| `epsilon` | DP privacy budget ε computed via Rényi DP accounting (α=10) |
+| `sigma` | DP noise multiplier |
+| `n_clients` | Number of federated clients |
+| `fl_rounds` | Total FL communication rounds |
+| `local_epochs` | Local training epochs per round |
+| `split` | Data split method (`time` = 75th percentile cutoff) |
+| `tail_avg_k` | Number of tail rounds averaged for final model |
 
 ---
 
-## Which Ablation CSV to Use
+## E2 — Ablation Study
 
-⚠️ **USE:** `results_e2_ablation_FIXED.csv` — BDM/PSE features correctly separated  
-❌ **DO NOT USE:** `results_e2_ablation.csv` (archived — USB signal leakage in Legacy-Only row)  
-❌ **DO NOT USE:** `results/archive/results_e2_ablation_OLD.csv`
-
-See `ABLATION_VERIFICATION.md` for full explanation.
+| Column | Description |
+|---|---|
+| `feature_set` | One of: `Legacy-Only` (23), `+BDM` (25), `+BDM+PSE` (26), `Full-CIPHER` (27) |
+| `n_features` | Number of features in this set |
+| `f1` | F1-score for this seed/feature set combination |
+| `split` | `time_75pct` — training on first 75% of timeline, test on last 25% |
+| `classifier` | `GradientBoostingClassifier_n100` (n_estimators=100) |
+| `wilcoxon_p` | Two-sided Wilcoxon signed-rank p-value vs Legacy-Only over 10 seeds |
+| `significant_p005` | TRUE if p < 0.05 |
+| `significant_p001` | TRUE if p < 0.01 |
 
 ---
 
-## Cross-Dataset Validation
+## E3 — Privacy-Utility Sweep
 
-| Dataset | F1 | AUC | Source |
-|---|---|---|---|
-| CERT r4.2 (primary) | 0.8531 | 0.9601 | `results_e1.csv` |
-| CERT r6.2 (local GPU, 4000 users) | 0.8520 | 0.9693 | `results/r6.2/` |
-| CERT r5.2 (local GPU, 700 users) | 0.7317 | 0.9127 | `results/r5.2/` |
+| Column | Description |
+|---|---|
+| `sigma` | DP noise multiplier (8.0, 4.0, 2.0, 1.2, 0.8, or `No-DP`) |
+| `epsilon` | Resulting ε value; `inf` for No-DP |
+| `f1` | Detection F1 at this privacy level |
+| `auc` | ROC-AUC at this privacy level |
 
-F1 is lower on r5.2 due to fewer malicious users (17 vs 70+). AUC remains strong.
-This is discussed in Section VI (Discussion) of the paper.
+---
+
+## E8 — Membership Inference Attack
+
+| Column | Description |
+|---|---|
+| `attack_type` | `confidence_mia` — logistic regression on model confidence scores |
+| `feature_used` | `predicted_confidence` — model output probability |
+| `mia_auc` | AUC of the MIA attack classifier. Near 0.5 = attacker at random guessing |
+| `threshold` | Security threshold (0.53). Below = DP effective |
+| `verdict` | Interpretation of MIA AUC |
+
+---
+
+## E9 — Byzantine Robustness
+
+| Column | Description |
+|---|---|
+| `config` | `Clean`, `FedAvg+Attack`, or `Krum+Attack` |
+| `aggregation` | `FedAvg` or `MultiKrum` |
+| `n_byzantine` | Number of Byzantine clients (3 out of 10 = 30%) |
+| `attack_type` | `sign_flip_scale` — θ_byz = θ_global − scale×(θ_local − θ_global) |
+| `attack_scale` | Scale factor (2.0) |
+| `f1_drop_pct` | Percentage F1 drop vs Clean baseline |
+| `attack_mitigated_pct` | % of FedAvg attack damage neutralised by Krum |
+
+---
+
+## Feature Set Definitions
+
+| Label | Features Included | Count |
+|---|---|---|
+| `Legacy-Only` | logon_count, after_hrs, unique_pcs, ah_ratio, usb_count, file_ops, rm_copies, rm_reads, rm_ratio, email_sent, ext_email, avg_mail_size, ext_ratio, http_count, risky_count, risky_ratio, role_changes, dept_changes, O, C, E, A, N | 23 |
+| `+BDM` | Legacy + pbi_drift, pbi_alert | 25 |
+| `+BDM+PSE` | +BDM + aif_score | 26 |
+| `Full-CIPHER` | +BDM+PSE + aif_alert | 27 |

@@ -1,2 +1,2 @@
-Dataset,MIA_AUC,Threshold,Verdict
-r5.2,0.4895,<0.53,DP effective - attacker at random guessing
+dataset,attack_type,feature_used,n_train_samples,n_test_samples,mia_auc,threshold,verdict,sigma,epsilon,seed,notes
+r5.2,confidence_mia,predicted_confidence,,, 0.4895,0.53,DP effective — attacker near random guessing,0.8,1.5250,42,MIA AUC < 0.5

@@ -1,10 +1,49 @@
-Experiment,Model,F1,AUC,MIA_AUC,Epsilon,Notes
-E1,No-DP Isolated,0.9841,0.9998,N/A,None,Privacy-free ceiling
-E1,DP-Isolated,0.8563,0.9649,N/A,1.28,Centralized DP
-E1,CIPHER (FL+DP),0.8531,0.9601,N/A,1.28,Primary contribution
-E8,No-DP Isolated,0.9841,0.9998,0.5031,None,MIA baseline
-E8,DP-Isolated,0.8563,0.9649,0.5161,1.28,MIA under DP
-E8,CIPHER,0.8531,0.9601,0.5023,1.28,MIA under FL+DP
-E9,CIPHER clean,0.8541,0.9678,N/A,1.28,No attack baseline
-E9,FedAvg + Byzantine 3/10,0.8119,0.9741,N/A,1.28,Attack degrades F1 -0.0422
-E9,Multi-Krum + Byzantine 3/10,0.7359,0.9586,N/A,1.28,Krum preserves AUC=0.9586
+experiment,dataset,config,metric,value,seed,notes
+E1,r6.2,CIPHER-FL-DP,F1,0.8808,42,Primary detection
+E1,r6.2,CIPHER-FL-DP,AUC,0.9855,42,
+E1,r6.2,CIPHER-FL-DP,Recall,0.8543,42,
+E1,r6.2,CIPHER-FL-DP,FPR,0.0024,42,
+E1,r6.2,CIPHER-FL-DP,Epsilon,1.3261,42,
+E1,r5.2,CIPHER-FL-DP,F1,0.7684,42,
+E1,r5.2,CIPHER-FL-DP,AUC,0.9467,42,
+E1,r5.2,CIPHER-FL-DP,Recall,0.6808,42,
+E1,r5.2,CIPHER-FL-DP,FPR,0.0055,42,
+E1,r5.2,CIPHER-FL-DP,Epsilon,1.5250,42,
+E1,r4.2,CIPHER-FL-DP,F1,0.7372,42,
+E1,r4.2,CIPHER-FL-DP,AUC,0.9964,42,
+E1,r4.2,CIPHER-FL-DP,Recall,0.9004,42,
+E1,r4.2,CIPHER-FL-DP,FPR,0.0070,42,
+E1,r4.2,CIPHER-FL-DP,Epsilon,1.3667,42,
+E2,r6.2,Legacy-Only_mean_F1,F1,0.9324,multi,Time-split ablation mean over 10 seeds
+E2,r6.2,+BDM_mean_F1,F1,0.9319,multi,
+E2,r6.2,+BDM+PSE_mean_F1,F1,0.9334,multi,
+E2,r6.2,Full-CIPHER_mean_F1,F1,0.9334,multi,
+E2,r6.2,Full-CIPHER_vs_Legacy,Wilcoxon_p,0.0020,multi,p=2*(1/2)^10
+E2,r5.2,Legacy-Only_mean_F1,F1,0.8259,multi,
+E2,r5.2,+BDM_mean_F1,F1,0.8251,multi,
+E2,r5.2,+BDM+PSE_mean_F1,F1,0.8216,multi,
+E2,r5.2,Full-CIPHER_mean_F1,F1,0.8216,multi,
+E2,r5.2,Full-CIPHER_vs_Legacy,Wilcoxon_p,0.0020,multi,
+E2,r4.2,ALL_FEATURE_SETS,F1,0.9976,multi,DEGENERATE — excluded from ablation claim
+E3,r6.2,sigma_8.0,F1,0.8068,42,Privacy-utility sweep
+E3,r6.2,sigma_4.0,F1,0.7981,42,
+E3,r6.2,sigma_2.0,F1,0.8469,42,
+E3,r6.2,sigma_1.2,F1,0.8736,42,
+E3,r6.2,sigma_0.8,F1,0.8834,42,PRIMARY — DP at near-zero cost vs No-DP 0.8828
+E3,r6.2,No-DP,F1,0.8828,42,
+E3,r5.2,sigma_0.8,F1,0.7653,42,
+E3,r5.2,No-DP,F1,0.7950,42,~3 F1 pt DP cost
+E3,r4.2,sigma_0.8,F1,0.7307,42,DP improves over No-DP — regularization effect
+E3,r4.2,No-DP,F1,0.6576,42,
+E8,r6.2,confidence_MIA,MIA_AUC,0.4839,42,DP prevents memorisation
+E8,r5.2,confidence_MIA,MIA_AUC,0.4895,42,
+E8,r4.2,confidence_MIA,MIA_AUC,0.5000,42,Perfect — pure random guessing
+E9,r6.2,Clean,F1,0.8808,42,Byzantine robustness
+E9,r6.2,FedAvg+Attack,F1,0.2778,42,68.46% drop — FedAvg collapses
+E9,r6.2,Krum+Attack,F1,0.8825,42,0.00% drop — Multi-Krum fully defended
+E9,r5.2,Clean,F1,0.7684,42,
+E9,r5.2,FedAvg+Attack,F1,0.4001,42,47.93% drop
+E9,r5.2,Krum+Attack,F1,0.7508,42,2.29% drop — 95.2% mitigation
+E9,r4.2,Clean,F1,0.7372,42,
+E9,r4.2,FedAvg+Attack,F1,0.2205,42,70.09% drop
+E9,r4.2,Krum+Attack,F1,0.6525,42,11.49% drop — edge case; 83.6% mitigation

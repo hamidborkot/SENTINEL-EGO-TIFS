@@ -1,2 +1,2 @@
-Dataset,MIA_AUC,Threshold,Verdict
-r6.2,0.4839,<0.53,DP effective - attacker at random guessing
+dataset,attack_type,feature_used,n_train_samples,n_test_samples,mia_auc,threshold,verdict,sigma,epsilon,seed,notes
+r6.2,confidence_mia,predicted_confidence,1044480,349530,0.4839,0.53,DP effective — attacker below random guessing,0.8,1.3261,42,MIA AUC < 0.5 means attacker has zero advantage

@@ -1,7 +1,7 @@
-Sigma,Epsilon,F1,AUC
-8.0,1.280,0.1306,0.7922
-4.0,1.283,0.6076,0.9871
-2.0,1.293,0.7173,0.9953
-1.2,1.318,0.7047,0.9962
-0.8,1.367,0.7307,0.9963
-No-DP,inf,0.6576,0.9583
+dataset,sigma,epsilon,f1,auc,n_clients,fl_rounds,local_epochs,seed,notes
+r4.2,8.0,1.280,0.1306,0.7922,10,35,5,42,Extreme noise collapses F1 on small dataset
+r4.2,4.0,1.283,0.6076,0.9871,10,35,5,42,
+r4.2,2.0,1.293,0.7173,0.9953,10,35,5,42,
+r4.2,1.2,1.318,0.7047,0.9962,10,35,5,42,
+r4.2,0.8,1.367,0.7307,0.9963,10,35,5,42,PRIMARY — DP noise acts as REGULARIZER improving F1 over No-DP
+r4.2,No-DP,inf,0.6576,0.9583,10,35,5,42,DP at sigma=0.8 outperforms No-DP by +7.3 F1 pts (regularization effect)

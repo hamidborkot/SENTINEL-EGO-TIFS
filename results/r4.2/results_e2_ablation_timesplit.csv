@@ -1,0 +1,21 @@
+dataset,feature_set,n_features,seed,f1,split,classifier,notes
+r4.2,Legacy-Only,23,0,0.9976,time_75pct,GradientBoostingClassifier_n100,DEGENERATE — labels reconstructed from USB proxy so Legacy features achieve ceiling
+r4.2,Legacy-Only,23,1,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,2,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,3,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,4,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,5,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,6,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,7,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,8,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Legacy-Only,23,9,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,0,0.9976,time_75pct,GradientBoostingClassifier_n100,DEGENERATE — all feature sets achieve ceiling
+r4.2,Full-CIPHER,27,1,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,2,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,3,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,4,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,5,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,6,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,7,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,8,0.9976,time_75pct,GradientBoostingClassifier_n100,
+r4.2,Full-CIPHER,27,9,0.9976,time_75pct,GradientBoostingClassifier_n100,

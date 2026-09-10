@@ -1,0 +1,2 @@
+dataset,comparison,feature_set_a,feature_set_b,n_seeds,mean_f1_a,mean_f1_b,delta_f1,wilcoxon_statistic,wilcoxon_p,significant_p005,significant_p001,split,notes
+r4.2,Full-CIPHER vs Legacy,Legacy-Only,Full-CIPHER,10,0.9976,0.9976,0.0000,,1.0000,FALSE,FALSE,time_75pct,DEGENERATE — r4.2 excluded from ablation claim. Labels reconstructed from USB proxy gives ceiling performance.

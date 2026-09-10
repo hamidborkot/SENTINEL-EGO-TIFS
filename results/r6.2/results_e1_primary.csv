@@ -1,2 +1,2 @@
-Dataset,F1,AUC,Recall,FPR,Epsilon
-r6.2,0.8808,0.9855,0.8543,0.0024,1.3261
+dataset,method,f1,auc,recall,fpr,precision,epsilon,sigma,n_clients,fl_rounds,local_epochs,seed,split,tail_avg_k,notes
+r6.2,CIPHER-FL-DP,0.8808,0.9855,0.8543,0.0024,0.9109,1.3261,0.8,10,20,3,42,time,5,Primary result — tail-averaged over last 5 rounds

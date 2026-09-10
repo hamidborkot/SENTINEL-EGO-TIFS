@@ -1,17 +1,4 @@
-Metric,r5.2,r6.2,Notes
-Users,2000,4000,r6.2 is 2x larger
-Malicious_users,100,100,Same count both datasets
-Malicious_pct,5.45%,2.72%,r5.2 higher imbalance
-E1_F1,0.7317,0.8520,r6.2 benefits from more data
-E1_AUC,0.9127,0.9693,Consistent improvement pattern
-E1_Recall,0.6281,0.8659,
-E1_Precision,0.8763,0.8386,r5.2 more precise less recall
-E1_FPR,0.0054,0.0046,Both very low FPR
-E1_Epsilon,1.2830,1.2830,Identical DP budget
-E8_MIA_AUC,0.5354,0.5171,Both near-random (DP effective)
-E9_Clean_F1,0.7181,0.8561,
-E9_FedAvg_Attack_F1,0.7063,0.8064,
-E9_Krum_Attack_F1,0.7022,0.7572,
-E9_FedAvg_F1_drop,-0.0118,-0.0497,r5.2 less degradation (smaller dataset)
-E9_Krum_Recall_gain_over_FedAvg,+0.0190,+0.0146,Krum advantage holds both datasets
-E9_Krum_AUC_gap_from_clean,-0.0167,-0.0106,
+dataset,malicious_rate_pct,approx_rows,n_users,e1_f1,e1_auc,e1_recall,e1_fpr,e1_epsilon,e2_wilcoxon_p,e3_f1_at_sigma0p8,e3_f1_nodp,e8_mia_auc,e9_krum_f1,e9_krum_drop_pct,e9_fedavg_drop_pct,e9_mitigation_pct
+r4.2,1.19,330000,1000,0.7372,0.9964,0.9004,0.0070,1.3667,DEGENERATE,0.7307,0.6576,0.5000,0.6525,11.49,70.09,83.6
+r5.2,5.45,692000,2000,0.7684,0.9467,0.6808,0.0055,1.5250,0.0020,0.7653,0.7950,0.4895,0.7508,2.29,47.93,95.2
+r6.2,2.72,1394000,4000,0.8808,0.9855,0.8543,0.0024,1.3261,0.0020,0.8834,0.8828,0.4839,0.8825,0.00,68.46,100.0
