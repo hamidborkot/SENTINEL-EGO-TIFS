@@ -1,0 +1,2 @@
+Dataset,MIA_AUC,Threshold,Verdict
+r4.2,0.5000,<0.53,Perfect - attacker has zero advantage (pure random guessing)

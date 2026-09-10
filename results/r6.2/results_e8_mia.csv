@@ -1,0 +1,2 @@
+Dataset,MIA_AUC,Threshold,Verdict
+r6.2,0.4839,<0.53,DP effective - attacker at random guessing

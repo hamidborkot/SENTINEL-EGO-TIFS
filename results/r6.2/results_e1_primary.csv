@@ -1,0 +1,2 @@
+Dataset,F1,AUC,Recall,FPR,Epsilon
+r6.2,0.8808,0.9855,0.8543,0.0024,1.3261

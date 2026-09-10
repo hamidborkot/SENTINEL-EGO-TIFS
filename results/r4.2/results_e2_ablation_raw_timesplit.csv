@@ -1,0 +1,5 @@
+FeatureSet,MeanF1,Std,WilcoxonP_vs_Legacy,Note
+Legacy-Only (23 features),0.9976,0.0000,baseline,DEGENERATE - labels derived from USB exfil volume
++BDM (25 features),0.9976,0.0000,1.0000,DEGENERATE - ceiling performance
++BDM+PSE (26 features),0.9976,0.0000,1.0000,DEGENERATE - ceiling performance
+Full-CIPHER (27 features),0.9976,0.0000,1.0000,DEGENERATE - ceiling performance

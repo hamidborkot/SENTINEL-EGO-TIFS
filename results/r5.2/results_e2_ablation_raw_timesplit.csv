@@ -1,0 +1,5 @@
+FeatureSet,MeanF1,Std,WilcoxonP_vs_Legacy
+Legacy-Only (23 features),0.8259,0.0000,baseline
++BDM (25 features),0.8251,0.0000,0.0020
++BDM+PSE (26 features),0.8216,0.0000,0.0020
+Full-CIPHER (27 features),0.8216,0.0000,0.0020
